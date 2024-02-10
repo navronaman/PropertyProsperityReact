@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 
 function App() {
+  const [data, setData] = useState([{}]);
+  const [randomNumber, setRandomNumber] = useState(0); // Corrected variable name
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch('/hello');
+      result.json().then((json) => {
+        console.log(json);
+        setRandomNumber(json.random);
+        setData(json);
+      });
+      console.log(result);
+    };
+    fetchData();
+  }, []);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app'>
+      Random Number: {randomNumber}
+      <div>
+        {Object.keys(data).map((key, index) => (
+          <p key={index}>
+            <strong>{key}: </strong> {data[key]}
+          </p>
+        ))}
+      </div>
     </div>
   );
 }
