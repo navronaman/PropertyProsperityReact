@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import index from './index.css'
 
 function App() {
 
@@ -47,7 +48,7 @@ function App() {
 
   // fetch ('/zpid')
   return (
-    <div className="App">
+    <div className="search-filter">
       <h1>Zillow Search Bar</h1>
         <div>      
           <form>
@@ -57,6 +58,7 @@ function App() {
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
+                className='search'
               />
             </label>
 
@@ -68,6 +70,7 @@ function App() {
                 type="text"
                 value={priceMin}
                 onChange={(e) => setPriceMin(e.target.value)}
+                className='pricemin'
               />
             </label>
             <label>
@@ -76,6 +79,7 @@ function App() {
                 type="text"
                 value={priceMax}
                 onChange={(e) => setPriceMax(e.target.value)}
+                className='others'
               />
             </label>
 
@@ -87,6 +91,7 @@ function App() {
                 type="text"
                 value={sqftMin}
                 onChange={(e) => setSqftMin(e.target.value)}
+                className='others'
               />
             </label>
             <label>
@@ -94,6 +99,7 @@ function App() {
               <input
                 type="text"
                 value={sqftMax}
+                className='others'
                 onChange={(e) => setSqftMax(e.target.value)}
               />
             </label>
@@ -106,6 +112,7 @@ function App() {
                 type="text"
                 value={bedsMin}
                 onChange={(e) => setBedsMin(e.target.value)}
+                className='others'
               />
             </label>
             <label>
@@ -114,6 +121,7 @@ function App() {
                 type="text"
                 value={bedsMax}
                 onChange={(e) => setBedsMax(e.target.value)}
+                className='others'
               />
             </label>
 
@@ -125,6 +133,7 @@ function App() {
                 type="text"
                 value={bathsMin}
                 onChange={(e) => setBathsMin(e.target.value)}
+                className='others'
               />
             </label>
             <label>
@@ -133,6 +142,7 @@ function App() {
                 type="text"
                 value={bathsMax}
                 onChange={(e) => setBathsMax(e.target.value)}
+                className='others'
               />
             </label>
 
@@ -197,7 +207,7 @@ function App() {
               <p>ZPID: {item.zpid}</p>
               <p>Address: {item.streetAddress}</p>
               <p>Price: {item.price}</p>
-              <img src={item.imgSrc} alt={`Image ${item.streetAddress}`} />
+              <img src={item.imgSrc}/>
             </div>
           ))}
         </div>

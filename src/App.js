@@ -20,14 +20,8 @@ function App() {
 
   return (
     <div className='app'>
-      Random Number: {randomNumber}
-      <div>
-        {Object.keys(data).map((key, index) => (
-          <p key={index}>
-            <strong>{key}: </strong> {JSON.stringify(data[key])}
-          </p>
-        ))}
-      </div>
+      <br/>
+      <br/>
     </div>
 
   
