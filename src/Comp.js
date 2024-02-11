@@ -5,6 +5,7 @@ function App() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
+  // this is when i call the api for like default stuff
   useEffect(() => {
     const fetchData = async () => {
       const options = {
@@ -37,34 +38,49 @@ function App() {
     fetchData();
   }, []);
 
-  export default function ZpidBhai() {
-    const [location, setLocation] = useState('');
-    const [price, setPrice] = useState('');
+  // i will use flask api to get the search stuff
 
-    const [zestimate, setZestimate] = useState('');
-    const [priceChange, setPriceChange] = useState('');
-    const [imagesArray, setImagesArray] = useState([]);
+  const[SearchedData, setSearchedData] = useState(null);
+  const [location, setLocation] = useState('');
+  const [price, setPrice] = useState('');
+  const [zestimate, setZestimate] = useState('');
+  const [priceChange, setPriceChange] = useState('');
+  const [imagesArray, setImagesArray] = useState([]);
 
-    const makeSearchBetter = () => {
-      if (location && price) {
-        fetch('/search', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ location, price }),
+  const makeSearchBetter = () => {
+    if (location && price) {
+      fetch('/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ location, price }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Success:', data);
+          setSearchedData(data);
+          setZestimate(data.zestimate);
+          setPriceChange(data.price);
+          setImagesArray(data.images);
         })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('Success:', data);
-
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
-      }
+        .catch((error) => {
+          console.error('Error:', error);
+        });
     }
-  }
+  };
+
+  // price min
+  // price max
+  // sqft min
+  // sqft max
+  // beds min
+  // beds max
+  // baths min
+  // baths max
+  // isApartment
+  // isCondo
+  // isTownhouse
 
   return (
     <div className="App">
@@ -77,8 +93,37 @@ function App() {
           <p>City: {data.results[0].city}</p>
           <p>City: {data.results[0].city}</p>
           {/* Add more data fields as needed */}
+
+          <form>
+            <label>
+              Location:
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </label>
+            <label>
+              Price:
+              <input
+                type="text"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </label>
+            <button type="button" onClick={makeSearchBetter}>
+              Search
+            </button>
+          </form>
         </div>
       )}
+
+      <div>
+        {imagesArray.map((image, index) => (
+          <img key={index} src={image} alt="House" />
+        ))}
+      </div>
+
     </div>
   );
 }
