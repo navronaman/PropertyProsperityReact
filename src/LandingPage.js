@@ -1,8 +1,8 @@
 import React from 'react'
 import index from './index.css'
-import ButtonGroup from '@mui/material';
-import Button from '@mui/material';
-import Box from '@mui/material';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 function Navbar(){
   return (
