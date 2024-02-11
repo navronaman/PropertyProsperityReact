@@ -2,62 +2,28 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function App() {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
 
-  // this is when i call the api for like default stuff
-  useEffect(() => {
-    const fetchData = async () => {
-      const options = {
-        method: 'GET',
-        url: 'https://zillow56.p.rapidapi.com/search',
-        params: {
-          location: 'new brunswick, nj',
-          output: 'json',
-          sortSelection: 'featured',
-          isComingSoon: 'false',
-          onlyWithPhotos: 'true'
-        },
-        headers: {
-          'X-RapidAPI-Key': 'd7e75d25efmsh4de6e9164d6480bp1245a0jsn1294f76079f6',
-          'X-RapidAPI-Host': 'zillow56.p.rapidapi.com'
-        }
-      };
-
-      try {
-        const response = await axios.request(options);
-        setData(response.data);
-        console.log("Does this even work?")
-        console.log(data);
-      } catch (error) {
-        setError(error.message);
-        console.log('There was an error!', error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   // i will use flask api to get the search stuff
 
   const [location, setLocation] = useState('');
-  const [priceMin, setPriceMin] = useState('');
+  const [priceMin, setPriceMin] = useState('0');
   const [priceMax, setPriceMax] = useState('');
-  const [sqftMin, setSqftMin] = useState('');
+  const [sqftMin, setSqftMin] = useState('0');
   const [sqftMax, setSqftMax] = useState('');
-  const [bedsMin, setBedsMin] = useState('');
+  const [bedsMin, setBedsMin] = useState('0');
   const [bedsMax, setBedsMax] = useState('');
-  const [bathsMin, setBathsMin] = useState('');
+  const [bathsMin, setBathsMin] = useState('0');
   const [bathsMax, setBathsMax] = useState('');
-  const [isApartment, setIsApartment] = useState('');
-  const [isCondo, setIsCondo] = useState('');
-  const [isTownhouse, setIsTownhouse] = useState('');
+  const [isApartment, setIsApartment] = useState(false);
+  const [isCondo, setIsCondo] = useState(false);
+  const [isTownhouse, setIsTownhouse] = useState(false);
   const [saleOrRent, setSaleOrRent] = useState('forSale');
 
-  const[SearchedData, setSearchedData] = useState(null);
+  const[SearchedData, setSearchedData] = useState([]);
 
   const makeSearchBetter = () => {
-    if (location && priceMin && priceMax && sqftMin && sqftMax && bedsMin && bedsMax && bathsMin && bathsMax && isApartment && isCondo && isTownhouse && saleOrRent) {
+    if (location && priceMin && priceMax && sqftMin && sqftMax && bedsMin && bedsMax && bathsMin && bathsMax && saleOrRent) {
       fetch('/search', {
         method: 'POST',
         headers: {
@@ -76,30 +42,10 @@ function App() {
     }
   };
 
-  // price min
-  // price max
-  // sqft min
-  // sqft max
-  // beds min
-  // beds max
-  // baths min
-  // baths max
-  // isApartment
-  // isCondo
-  // isTownhouse
-
   return (
     <div className="App">
-      <h1>Zillow Data</h1>
-      {error && <p>Error: {error}</p>}
-      {data && (
-        <div>
-          <p>HAANJI HAANJI DEDO MIC PE LIGHTUP</p>
-          <p>Address: {data.results[0].streetAddress}</p>
-          <p>City: {data.results[0].city}</p>
-          <p>City: {data.results[0].city}</p>
-          {/* Add more data fields as needed */}
-
+      <h1>Zillow Search Bar</h1>
+        <div>      
           <form>
             <label>
               Location:
@@ -109,6 +55,8 @@ function App() {
                 onChange={(e) => setLocation(e.target.value)}
               />
             </label>
+
+            <br />
 
             <label>
               Price Min:
@@ -127,6 +75,8 @@ function App() {
               />
             </label>
 
+            <br />
+
             <label>
               Sqft Min:
               <input
@@ -143,6 +93,8 @@ function App() {
                 onChange={(e) => setSqftMax(e.target.value)}
               />
             </label>
+
+            <br />
 
             <label>
               Beds Min:
@@ -161,6 +113,8 @@ function App() {
               />
             </label>
 
+            <br />
+
             <label>
               Baths Min:
               <input
@@ -178,6 +132,8 @@ function App() {
               />
             </label>
 
+            <br />
+
             <label>
               isApartment:
               <input
@@ -186,7 +142,6 @@ function App() {
                 onChange={(e) => setIsApartment(e.target.checked)}
               />
             </label>
-
             <label>
               isCondo:
               <input
@@ -195,7 +150,6 @@ function App() {
                 onChange={(e) => setIsCondo(e.target.checked)}
               />
             </label>
-
             <label>
               isTownhouse:
               <input
@@ -204,6 +158,8 @@ function App() {
                 onChange={(e) => setIsTownhouse(e.target.checked)}
               />
             </label>
+
+            <br />
 
             <label>
               For Sale:
@@ -230,7 +186,17 @@ function App() {
             </button>
           </form>
         </div>
-      )}
+
+        <div>
+          {SearchedData && SearchedData.map((item, index) => (
+            <div key={index}>
+              <p>ZPID: {item.zpid}</p>
+              <p>Address: {item.streetAddress}</p>
+              <p>Price: {item.price}</p>
+              <img src={item.imgSrc} alt={`Image ${item.streetAddress}`} />
+            </div>
+          ))}
+        </div>
 
     </div>
   );
