@@ -40,15 +40,24 @@ function App() {
 
   // i will use flask api to get the search stuff
 
-  const[SearchedData, setSearchedData] = useState(null);
   const [location, setLocation] = useState('');
-  const [price, setPrice] = useState('');
-  const [zestimate, setZestimate] = useState('');
-  const [priceChange, setPriceChange] = useState('');
-  const [imagesArray, setImagesArray] = useState([]);
+  const [priceMin, setPriceMin] = useState('');
+  const [priceMax, setPriceMax] = useState('');
+  const [sqftMin, setSqftMin] = useState('');
+  const [sqftMax, setSqftMax] = useState('');
+  const [bedsMin, setBedsMin] = useState('');
+  const [bedsMax, setBedsMax] = useState('');
+  const [bathsMin, setBathsMin] = useState('');
+  const [bathsMax, setBathsMax] = useState('');
+  const [isApartment, setIsApartment] = useState('');
+  const [isCondo, setIsCondo] = useState('');
+  const [isTownhouse, setIsTownhouse] = useState('');
+  const [saleOrRent, setSaleOrRent] = useState('forSale');
+
+  const[SearchedData, setSearchedData] = useState(null);
 
   const makeSearchBetter = () => {
-    if (location && price) {
+    if (location && priceMin && priceMax && sqftMin && sqftMax && bedsMin && bedsMax && bathsMin && bathsMax && isApartment && isCondo && isTownhouse && saleOrRent) {
       fetch('/search', {
         method: 'POST',
         headers: {
@@ -60,6 +69,8 @@ function App() {
         .then((data) => {
           console.log('Success:', data);
           setSearchedData(data);
+
+          setZpid(data.zpid);
           setZestimate(data.zestimate);
           setPriceChange(data.price);
           setImagesArray(data.images);
@@ -103,14 +114,123 @@ function App() {
                 onChange={(e) => setLocation(e.target.value)}
               />
             </label>
+
             <label>
-              Price:
+              Price Min:
               <input
                 type="text"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={priceMin}
+                onChange={(e) => setPriceMin(e.target.value)}
               />
             </label>
+            <label>
+              Price Max:
+              <input
+                type="text"
+                value={priceMax}
+                onChange={(e) => setPriceMax(e.target.value)}
+              />
+            </label>
+
+            <label>
+              Sqft Min:
+              <input
+                type="text"
+                value={sqftMin}
+                onChange={(e) => setSqftMin(e.target.value)}
+              />
+            </label>
+            <label>
+              Sqft Max:
+              <input
+                type="text"
+                value={sqftMax}
+                onChange={(e) => setSqftMax(e.target.value)}
+              />
+            </label>
+
+            <label>
+              Beds Min:
+              <input
+                type="text"
+                value={bedsMin}
+                onChange={(e) => setBedsMin(e.target.value)}
+              />
+            </label>
+            <label>
+              Beds Max:
+              <input
+                type="text"
+                value={bedsMax}
+                onChange={(e) => setBedsMax(e.target.value)}
+              />
+            </label>
+
+            <label>
+              Baths Min:
+              <input
+                type="text"
+                value={bathsMin}
+                onChange={(e) => setBathsMin(e.target.value)}
+              />
+            </label>
+            <label>
+              Baths Max:
+              <input
+                type="text"
+                value={bathsMax}
+                onChange={(e) => setBathsMax(e.target.value)}
+              />
+            </label>
+
+            <label>
+              isApartment:
+              <input
+                type="checkbox"
+                value={isApartment}
+                onChange={(e) => setIsApartment(e.target.value)}
+              />
+            </label>
+
+            <label>
+              isCondo:
+              <input
+                type="checkbox"
+                value={isCondo}
+                onChange={(e) => setIsCondo(e.target.value)}
+              />
+            </label>
+
+            <label>
+              isTownhouse:
+              <input
+                type="checkbox"
+                value={isTownhouse}
+                onChange={(e) => setIsTownhouse(e.target.value)}
+              />
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                value="forSale"
+                checked={saleOrRent === 'forSale'}
+                onChange={(e) => setSaleOrRent(e.target.value)}
+              >
+                For Sale
+              </input>
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="forRent"
+                checked={saleOrRent === 'forRent'}
+                onChange={(e) => setSaleOrRent(e.target.value)}
+              >
+              For Rent
+              </input>
+            </label>
+
             <button type="button" onClick={makeSearchBetter}>
               Search
             </button>
