@@ -24,7 +24,7 @@ function App() {
       <div>
         {Object.keys(data).map((key, index) => (
           <p key={index}>
-            <strong>{key}: </strong> {data[key]}
+            <strong>{key}: </strong> {JSON.stringify(data[key])}
           </p>
         ))}
       </div>
