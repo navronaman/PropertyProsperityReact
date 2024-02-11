@@ -4,13 +4,17 @@ import App from './App';
 import Comp from './Comp';
 import reportWebVitals from './reportWebVitals';
 import LandingPage from './LandingPage';
+import PropertyPage from './PropertyPage';
+import { Router } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Router>
+    <LandingPage />
     <App />
     <Comp />
-    <LandingPage />
+    </Router>
   </React.StrictMode>
 );
 

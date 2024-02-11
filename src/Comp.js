@@ -22,6 +22,9 @@ function App() {
 
   const[SearchedData, setSearchedData] = useState([]);
 
+  const[ZPID, setZPID] = useState('');
+  const[ZPIDData, setZPIDData] = useState([{}]);
+
   const makeSearchBetter = () => {
     if (location && priceMin && priceMax && sqftMin && sqftMax && bedsMin && bedsMax && bathsMin && bathsMax && saleOrRent) {
       fetch('/search', {
@@ -42,6 +45,7 @@ function App() {
     }
   };
 
+  // fetch ('/zpid')
   return (
     <div className="App">
       <h1>Zillow Search Bar</h1>
