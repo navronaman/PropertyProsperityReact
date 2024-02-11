@@ -66,6 +66,18 @@ code {
   padding-right: 20px;
 }
 
+#price{
+  color:limegreen;
+}
+
+#p{
+  color:black;
+}
+
+#curd{
+  width:auto;
+}
+
 body {
   margin: 0px;
   padding: 0px;
@@ -204,4 +216,10 @@ body {
           .box-shadow-bottom {
               box-shadow: 0 5px 3px -3px white;
               color: white;
+          }
+
+          .info-center{
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }

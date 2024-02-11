@@ -204,14 +204,19 @@ function App() {
         <div>
           {SearchedData && SearchedData.map((item, index) => (
             <div key={index}>
-              <p>ZPID: {item.zpid}</p>
-              <p>Address: {item.streetAddress}</p>
-              <p>Price: {item.price}</p>
-              <img src={item.imgSrc}/>
+
+          <div className="card" id="curd">
+            <img src={item.imgSrc}/>
+               <div className="card-body">
+               <p className="card-text">ZPID: {item.zpid}</p>
+               <p className="card-text">Address: {item.streetAddress}</p>
+               <p className="card-text" id="price">Price: {item.price}</p>
+              </div>
+           </div>
+              
             </div>
           ))}
         </div>
-
     </div>
   );
 }

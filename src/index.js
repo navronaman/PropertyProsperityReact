@@ -4,6 +4,7 @@ import App from './App';
 import Comp from './Comp';
 import reportWebVitals from './reportWebVitals';
 import LandingPage from './LandingPage';
+import InfoHriday from './InfoHriday';
 import PropertyPage from './PropertyPage';
 import { Router } from 'react-router-dom';
 
@@ -14,6 +15,7 @@ root.render(
     <LandingPage />
     <App />
     <Comp />
+    <InfoHriday />
     {/* </Router> */}
   </React.StrictMode>
 );
