@@ -19,7 +19,7 @@ function App() {
           onlyWithPhotos: 'true'
         },
         headers: {
-          'X-RapidAPI-Key': '8960a9414bmsh79b0e7d134ed3eap198937jsn3a471298130f',
+          'X-RapidAPI-Key': 'd7e75d25efmsh4de6e9164d6480bp1245a0jsn1294f76079f6',
           'X-RapidAPI-Host': 'zillow56.p.rapidapi.com'
         }
       };
@@ -63,17 +63,12 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ location, price }),
+        body: JSON.stringify({ location, priceMin, priceMax, sqftMin, sqftMax, bedsMin, bedsMax, bathsMin, bathsMax, isApartment, isCondo, isTownhouse, saleOrRent}),
       })
         .then((response) => response.json())
         .then((data) => {
           console.log('Success:', data);
           setSearchedData(data);
-
-          setZpid(data.zpid);
-          setZestimate(data.zestimate);
-          setPriceChange(data.price);
-          setImagesArray(data.images);
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -187,8 +182,8 @@ function App() {
               isApartment:
               <input
                 type="checkbox"
-                value={isApartment}
-                onChange={(e) => setIsApartment(e.target.value)}
+                checked={isApartment}
+                onChange={(e) => setIsApartment(e.target.checked)}
               />
             </label>
 
@@ -196,8 +191,8 @@ function App() {
               isCondo:
               <input
                 type="checkbox"
-                value={isCondo}
-                onChange={(e) => setIsCondo(e.target.value)}
+                checked={isCondo}
+                onChange={(e) => setIsCondo(e.target.checked)}
               />
             </label>
 
@@ -205,30 +200,29 @@ function App() {
               isTownhouse:
               <input
                 type="checkbox"
-                value={isTownhouse}
-                onChange={(e) => setIsTownhouse(e.target.value)}
+                checked={isTownhouse}
+                onChange={(e) => setIsTownhouse(e.target.checked)}
               />
             </label>
 
             <label>
+              For Sale:
               <input
                 type="radio"
                 value="forSale"
                 checked={saleOrRent === 'forSale'}
                 onChange={(e) => setSaleOrRent(e.target.value)}
-              >
-                For Sale
-              </input>
+              />
             </label>
+
             <label>
+              For Rent:
               <input
                 type="radio"
                 value="forRent"
                 checked={saleOrRent === 'forRent'}
                 onChange={(e) => setSaleOrRent(e.target.value)}
-              >
-              For Rent
-              </input>
+              />
             </label>
 
             <button type="button" onClick={makeSearchBetter}>
@@ -237,12 +231,6 @@ function App() {
           </form>
         </div>
       )}
-
-      <div>
-        {imagesArray.map((image, index) => (
-          <img key={index} src={image} alt="House" />
-        ))}
-      </div>
 
     </div>
   );
